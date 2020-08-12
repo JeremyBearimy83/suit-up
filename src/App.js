@@ -6,14 +6,10 @@ import ShopPage from "./pages/shoppage/shoppage.component.jsx";
 import Header from "./components/header/header.component.jsx";
 import AuthStuff from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx";
 import { auth, createProfileDocument } from "./firebase/firebase.utils";
+import { connect } from "react-redux";
+import { setCurrentUser } from "./redux/user/user.actions";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentUser: null,
-    };
-  }
   unsubscribeFromAuth = null;
 
   componentDidMount() {
@@ -21,15 +17,13 @@ class App extends Component {
       if (userAuth) {
         const userRef = await createProfileDocument(userAuth);
         userRef.onSnapshot((snapShot) => {
-          this.setState(
-            {
-              currentUser: { id: snapShot.id, ...snapShot.data() },
-            },
-            () => console.log(this.state)
-          );
+          this.props.setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data(),
+          });
         });
       } else {
-        this.setState({ currentUser: null });
+        this.props.setCurrentUser(null);
       }
     });
   }
@@ -50,5 +44,8 @@ class App extends Component {
     );
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
 
-export default App;
+export default connect(null, mapDispatchToProps)(App);
