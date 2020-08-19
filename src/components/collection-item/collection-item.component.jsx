@@ -1,5 +1,5 @@
 import React from "react";
-import "./collection-item.styles.css";
+import "./collection-item.styles.scss";
 import CustomButton from "../custom-button/custom-button.component";
 
 const CollectionItem = (props) => {
