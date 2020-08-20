@@ -12,13 +12,19 @@ const CartIcon = (props) => {
   return (
     <div className="cart-icon" onClick={props.toggleCart}>
       <ShoppingIcon className="shopping-icon" />
-      <span className="item-count">{0}</span>
+      <span className="item-count">{props.numOfItems}</span>
     </div>
   );
 };
+const mapStateToProps = ({ cart }) => ({
+  numOfItems: cart.cartItems.reduce(
+    (accumulator, item) => accumulator + item.quantity,
+    0
+  ),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   toggleCart: () => dispatch(toggleCart()),
 });
 
-export default connect(null, mapDispatchToProps)(CartIcon);
+export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
