@@ -1,11 +1,22 @@
 import React from "react";
+
 import "./header.styles.scss";
+
 import { Link } from "react-router-dom";
+
 import { ReactComponent as Logo } from "../../assets/crown.svg";
+
 import { auth } from "../../firebase/firebase.utils";
+
 import { connect } from "react-redux";
+
 import CartIcon from "../shopping-icon/cart-icon.component";
+
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+
+import { selectCartHidden } from "../../redux/cart/cart.selectors.js";
+
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 
 const Header = ({ currentUser, isCartDropdownHidden }) => {
   return (
@@ -38,8 +49,8 @@ const Header = ({ currentUser, isCartDropdownHidden }) => {
 };
 
 const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-  isCartDropdownHidden: state.cart.hidden,
+  currentUser: selectCurrentUser(state),
+  isCartDropdownHidden: selectCartHidden(state),
 });
 
 export default connect(mapStateToProps)(Header);
