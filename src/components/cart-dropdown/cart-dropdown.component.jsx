@@ -10,7 +10,9 @@ import { connect } from "react-redux";
 
 import { selectCartItems } from "../../redux/cart/cart.selectors";
 
-const CartDropdown = ({ cartItems }) => {
+import { withRouter } from "react-router-dom";
+
+const CartDropdown = ({ cartItems, history }) => {
   return (
     <div className="cart-dropdown">
       {cartItems.length ? (
@@ -20,12 +22,14 @@ const CartDropdown = ({ cartItems }) => {
           ))}
         </div>
       ) : (
-        <span className="empty-message"> Your cart is empty</span>
+        <span className="empty-message"> Your cart is empty!</span>
       )}
 
-      <CustomButton>GO TO CHECKOUT</CustomButton>
+      <CustomButton onClick={() => history.push("/checkout")}>
+        GO TO CHECKOUT
+      </CustomButton>
     </div>
   );
 };
 const mapStateToProps = (state) => ({ cartItems: selectCartItems(state) });
-export default connect(mapStateToProps)(CartDropdown);
+export default withRouter(connect(mapStateToProps)(CartDropdown));

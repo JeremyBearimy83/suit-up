@@ -6,6 +6,8 @@ import Homepage from "./pages/homepage/homepage.component.jsx";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ShopPage from "./pages/shoppage/shoppage.component.jsx";
 
+import Checkout from "./pages/checkout/checkout.component";
+
 import Header from "./components/header/header.component.jsx";
 import AuthStuff from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx";
 
@@ -52,6 +54,7 @@ class App extends Component {
               this.props.currentUser ? <Redirect to="/" /> : <AuthStuff />
             }
           ></Route>
+          <Route exact path="/checkout" component={Checkout}></Route>
         </Switch>
       </div>
     );
