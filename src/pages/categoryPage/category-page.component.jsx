@@ -8,11 +8,16 @@ import { connect } from 'react-redux';
 import CollectionItem from "../../components/collection-item/collection-item.component"
 
 const CategoryPage = ({ match, collections }) => {
-  const categoryItems =
+  const category =
     collections.find((collection) => collection.routeName === match.params.id);
   return (
     <div className='category-page'>
-      {categoryItems.items.map(item => <CollectionItem item={item} key={item.id} />)}
+      <h2 className='title'>{category.title}</h2>
+      <div className='items'>{category.items.map(
+        item => <CollectionItem item={item} key={item.id} />
+      )}
+      </div>
+
     </div>
   )
 };
